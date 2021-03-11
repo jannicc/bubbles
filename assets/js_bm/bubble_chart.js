@@ -201,6 +201,37 @@ var agecatCenters = { // Center locations of the bubbles.
   };  
     
     
+    // instagram
+    
+    
+    
+    var instagramCenters = { // Center locations of the bubbles. 
+    '0': { x: 220, y: height / 2  },
+    '1': { x: 320, y: height / 2  },
+    '2': { x: 420, y: height / 2  },
+    '3': { x: 600, y: height / 2  },
+    '4': { x: 800, y: height / 2  }
+  
+  };
+
+  var instagramTitleX = {  // X locations of the year titles.
+    'Vertrauen sie der Social Media Plattform Instagram?': 500,
+    'Weiss nicht': 110,
+    'Ja': 230, 
+    'Eher Ja': 380, 
+    'Eher Nein': 580,
+    'Nein': 870,
+  };
+    
+    var instagramTitleY = {  // Y locations of the year titles.
+    'Vertrauen sie der Social Media Plattform Instagram?': 35, 
+    'Weiss nicht': 70,
+    'Ja': 70, 
+    'Eher Ja': 70, 
+    'Eher Nein': 70,
+    'Nein': 70,
+  };  
+    
 //* ------------------------------------------------------------------
 //
 // Teil 4 - Datenmanipulation (csv into JS)
@@ -269,6 +300,7 @@ var agecatCenters = { // Center locations of the bubbles.
         concerntext: d.sorgen,
           
         facebook: d.facebcat,
+        instagram: d.instacat,
     
           
         x: Math.random() * 900,
@@ -367,6 +399,7 @@ var agecatCenters = { // Center locations of the bubbles.
     hideScreentime();
     hideConcern();  
       hideFacebook();
+      hideInstagram();
     
     force.on('tick', function (e) {
       bubbles.each(moveToCenter(e.alpha))
@@ -409,6 +442,7 @@ Die Positionierung basiert auf dem alpha Parameter des force layouts und wird kl
     hideConcern();
     hideScreentime();
     hideFacebook();
+     hideInstagram();
 
     force.on('tick', function (e) {
       bubbles.each(moveToAgecat(e.alpha))
@@ -457,7 +491,7 @@ function moveToAgecat(alpha) {
     hideConcern();
     hideScreentime();
       hideFacebook();
-
+      hideInstagram();
     force.on('tick', function (e) {
       bubbles.each(moveToSex(e.alpha))
         .attr('cx', function (d) { return d.x; })
@@ -505,6 +539,7 @@ function moveToAgecat(alpha) {
     hideAgecat();
     hideConcern();
       hideFacebook();
+      hideInstagram();
 
     force.on('tick', function (e) {
       bubbles.each(moveToScreentime(e.alpha))
@@ -554,6 +589,7 @@ function moveToAgecat(alpha) {
     hideAgecat();
     hideScreentime();
       hideFacebook();
+      hideInstagram();
 
     force.on('tick', function (e) {
       bubbles.each(moveToConcern(e.alpha))
@@ -602,6 +638,7 @@ function moveToAgecat(alpha) {
     hideSex();
     hideConcern();
     hideScreentime();
+    hideInstagram();
 
     force.on('tick', function (e) {
       bubbles.each(moveToFacebook(e.alpha))
@@ -638,6 +675,56 @@ function moveToFacebook(alpha) {
       .attr('text-anchor', 'middle')
       .text(function (d) { return d; });
     }  
+    
+        //* ------------------------------------------------------------------
+//
+// instagram
+//
+// -----------------------------------------------------------------*/    
+    
+  function splitBubblesintoInstagram() {
+    showInstagram();
+    hideAgecat();
+    hideSex();
+    hideConcern();
+    hideScreentime();
+    hideFacebook();
+
+    force.on('tick', function (e) {
+      bubbles.each(moveToInstagram(e.alpha))
+        .attr('cx', function (d) { return d.x; })
+        .attr('cy', function (d) { return d.y; });
+    });
+
+    force.start();
+  }
+    
+    
+function moveToInstagram(alpha) {
+    return function (d) {
+      var target = instagramCenters[d.instagram];
+      d.x = d.x + (target.x - d.x) * damper * alpha * 1.1;
+      d.y = d.y + (target.y - d.y) * damper * alpha * 1.1;
+    };
+  }
+
+  function hideInstagram() {
+    svg.selectAll('.instagram').remove();
+  }
+
+  function showInstagram() {
+
+    var instagramData = d3.keys(instagramTitleX);
+    var instagram = svg.selectAll('.instagram')
+      .data(instagramData);
+
+    instagram.enter().append('text')
+      .attr('class', 'instagram')
+      .attr('x', function (d) { return instagramTitleX[d]; })
+      .attr('y', function (d) { return instagramTitleY[d]; })
+      .attr('text-anchor', 'middle')
+      .text(function (d) { return d; });
+    }  
 //* ------------------------------------------------------------------
 //
 // WISSENSCHAFTSWOCHE F
@@ -665,6 +752,8 @@ function moveToFacebook(alpha) {
       splitBubblesintoScreentime();
     } else if (displayName === 'facebook') {
       splitBubblesintoFacebook();
+     } else if (displayName === 'instagram') {
+      splitBubblesintoInstagram();
     } else {
       groupBubbles();
     }
@@ -713,9 +802,12 @@ function moveToFacebook(alpha) {
                   '</span><br/>' +
                   '<span class="name">"Ich mache mir Sorgen um meine Daten": </span><span class="value">' +
                   d.concerntext +
-                  '</span>';
-                  '<span class="name">"...": </span><span class="value">' +
+                  '</span>' +
+                  '<span class="name">"Vertrauen in Facebook": </span><span class="value">' +
                   d.facebook +
+                  '</span>' +
+                  '<span class="name">"Vertrauen in Instagram": </span><span class="value">' +
+                  d.instagram +
                   '</span>';
     tooltip2.showtooltip2(content, d3.event);
   }

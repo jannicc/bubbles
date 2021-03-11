@@ -1,5 +1,5 @@
 a, a:visited, a:active {
-  color: #CD003C;
+  color: #42c8f5;
 }
 
 .text_footer {
@@ -17,7 +17,7 @@ a, a:visited, a:active {
 }
 
 .logobar {
-  background-color: #CD003C;
+  background-color: #42c8f5;
   margin-bottom: 0px;    
 height: 70px;
 }
@@ -26,6 +26,9 @@ height: 70px;
     color:#7b7b7b;
 }
 
+.bluetext {
+    color:#42c8f5;
+}
 .vorgehen_text {
      font-size: 15px;
 }
@@ -48,7 +51,8 @@ height: 70px;
 }
 
 .button.active {
-  background: #CD003C;
+  background: #42c8f5;
+  background: #42c8f5;
   color: #fff;
 }
 
