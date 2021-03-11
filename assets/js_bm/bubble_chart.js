@@ -183,12 +183,23 @@ var agecatCenters = { // Center locations of the bubbles.
   };
 
   var facebookTitleX = {  // X locations of the year titles.
-    '"aaa."': 500,
-    'Stimmt ganzbbb': 150,
-    'Stimmt eherccc': 350, 
-    'Stimmt eher nichdddt': 600, 
-    'Stimmt nichtggg': 850
+    'Vertrauen sie der Social Media Plattform Facebook?': 500,
+    'Weiss nicht': 150,
+    'Ja': 270, 
+    'Eher Ja': 380, 
+    'Eher Nein': 580,
+    'Nein': 870,
   };
+    
+    var facebookTitleY = {  // Y locations of the year titles.
+    'Vertrauen sie der Social Media Plattform Facebook?': 35, 
+    'Weiss nicht': 70,
+    'Ja': 70, 
+    'Eher Ja': 70, 
+    'Eher Nein': 70,
+    'Nein': 70,
+  };  
+    
     
 //* ------------------------------------------------------------------
 //
@@ -587,7 +598,7 @@ function moveToAgecat(alpha) {
     
   function splitBubblesintoFacebook() {
     showFacebook();
-      hideAgecat();
+    hideAgecat();
     hideSex();
     hideConcern();
     hideScreentime();
@@ -618,12 +629,12 @@ function moveToFacebook(alpha) {
 
     var facebookData = d3.keys(facebookTitleX);
     var facebook = svg.selectAll('.facebook')
-      .data(facebookata);
+      .data(facebookData);
 
     facebook.enter().append('text')
       .attr('class', 'facebook')
       .attr('x', function (d) { return facebookTitleX[d]; })
-      .attr('y', 65)
+      .attr('y', function (d) { return facebookTitleY[d]; })
       .attr('text-anchor', 'middle')
       .text(function (d) { return d; });
     }  
