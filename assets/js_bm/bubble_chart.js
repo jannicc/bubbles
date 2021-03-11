@@ -219,7 +219,7 @@ var agecatCenters = { // Center locations of the bubbles.
     'Weiss nicht': 110,
     'Ja': 230, 
     'Eher Ja': 380, 
-    'Eher Nein': 580,
+    'Eher Nein': 620,
     'Nein': 870,
   };
     
